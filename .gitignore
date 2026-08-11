@@ -1,7 +1,44 @@
+# --- Python ---
 __pycache__/
-*.pyc
-.env
-*.json
+*.py[cod]
+*$py.class
+.Python
 venv/
+env/
 .venv/
+*.egg-info/
+dist/
+build/
+
+# --- Environment & Secrets ---
+.env
+.env.*
+!.env.example
+*service-account*.json
+*credentials*.json
+*.pem
+*.key
+
+# --- GCP ---
+.gcloud/
+
+# --- Docker ---
+*.log
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- IDE ---
 .vscode/
+.idea/
+*.swp
+
+# --- Node (frontend, if applicable) ---
+node_modules/
+.next/
+dist/
+
+# --- Misc ---
+*.tmp
+*.bak
