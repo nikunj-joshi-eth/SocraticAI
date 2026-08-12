@@ -1,0 +1,26 @@
+# Environment & secret files
+.env
+*.env
+
+# Python virtual environment
+venv/
+env/
+ENV/
+*.venv
+
+# Byte-compiled / Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS / IDE generated files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+
+# Image outputs
+processed_problem.jpg
+*.png
+*.jpg
+*.jpeg
