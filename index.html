@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Doubt Portal | Submit Doubt & Export Data</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">JEE & NEET Doubt Desk</h1>
+          <span class="brand-subtitle">Competitive Exam Doubt Portal</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button id="guide-btn" class="btn btn-outline" title="Backend Integration Schema">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 1-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Export Data Specs
+        </button>
+
+        <button id="theme-toggle" class="icon-btn" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Problem Statement Highlight Banner -->
+      <div class="problem-banner">
+        <div class="banner-badge">⚡ 24/7 Late-Night Doubt Diagnostic</div>
+        <h2 class="page-title">JEE & NEET 24/7 Doubt Resolver</h2>
+        <p class="page-description">
+          Helping 3.8M+ aspirants eliminate score loss due to late-night doubts. Get instant diagnostic tracking to pinpoint whether your error is <strong>Conceptual</strong> or <strong>Calculation</strong> with Socratic step-by-step guidance.
+        </p>
+      </div>
+
+      <form id="doubt-form" onsubmit="return false;" class="doubt-card">
+        
+        <!-- STEP 1: Academic Selection Cascades -->
+        <section class="form-section">
+          <div class="section-header">
+            <span class="step-badge">1</span>
+            <div class="section-title-wrap">
+              <h3>Exam & Syllabus Context</h3>
+              <p>Select your target competitive exam, subject, and chapter.</p>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <!-- Exam Selector -->
+            <div class="form-group">
+              <label for="class-select" class="form-label">
+                Target Exam <span class="required">*</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="class-select" required>
+                  <option value="" disabled selected>-- Select Exam --</option>
+                  <option value="JEE Main">JEE Main</option>
+                  <option value="JEE Advanced">JEE Advanced</option>
+                  <option value="NEET Medical">NEET Medical</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Subject Selector (Dynamic) -->
+            <div class="form-group">
+              <label for="subject-select" class="form-label">
+                Subject <span class="required">*</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="subject-select" disabled required>
+                  <option value="" disabled selected>-- Select Exam First --</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Chapter Selector (Dynamic) -->
+            <div class="form-group">
+              <label for="chapter-select" class="form-label">
+                Chapter <span class="required">*</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="chapter-select" disabled required>
+                  <option value="" disabled selected>-- Select Subject First --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-topic tag -->
+          <div class="form-group margin-top-md">
+            <label for="topic-input" class="form-label">Sub-Topic / Question Reference (Optional)</label>
+            <input type="text" id="topic-input" class="form-control" placeholder="e.g. Q14 HC Verma, Electrostatic Potential, GOC Isomerism" />
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- STEP 2: Photo Upload & Canvas Annotation Studio -->
+        <section class="form-section">
+          <div class="section-header">
+            <span class="step-badge">2</span>
+            <div class="section-title-wrap">
+              <h3>Snap / Upload Question Photo</h3>
+              <p>Upload your problem paper or handwritten calculation sheet and highlight where you got stuck.</p>
+            </div>
+          </div>
+
+          <div class="photo-upload-area">
+            <!-- Dropzone -->
+            <div id="dropzone" class="dropzone">
+              <input type="file" id="photo-input" accept="image/*" class="file-input" />
+              <div class="dropzone-content">
+                <div class="upload-icon">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+                <h4 class="upload-title">Click to Browse or Drag & Drop Question Image</h4>
+                <p class="upload-subtitle">Supports JPG, PNG, WEBP (Max 10MB)</p>
+                <div class="upload-actions">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('photo-input').click()">
+                    Browse File
+                  </button>
+                  <label for="camera-input" class="btn btn-outline btn-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                      <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Snap Photo
+                  </label>
+                  <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none;" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas Studio Container -->
+            <div id="canvas-studio" class="canvas-studio hidden">
+              <div class="studio-toolbar">
+                <div class="toolbar-left">
+                  <span class="studio-label">Annotation Tools:</span>
+                  <button type="button" id="tool-pen" class="tool-btn active" title="Highlight Pen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                      <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                    </svg>
+                    Highlight Marker
+                  </button>
+                  <button type="button" id="rotate-btn" class="tool-btn" title="Rotate 90°">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="23 4 23 10 17 10"/>
+                      <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                    Rotate 90°
+                  </button>
+                  <button type="button" id="clear-draw-btn" class="tool-btn" title="Clear Marker">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3 6 5 6 21 6"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Clear Marker
+                  </button>
+                </div>
+
+                <div class="toolbar-right">
+                  <button type="button" id="remove-photo-btn" class="btn btn-danger btn-xs">
+                    Remove Photo
+                  </button>
+                </div>
+              </div>
+
+              <div class="canvas-viewport">
+                <canvas id="photo-canvas"></canvas>
+              </div>
+              <p class="studio-hint">Tip: Drag over the photo to highlight the step where your answer diverged!</p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- STEP 3: Question Text & Diagnostic Self-Assessment -->
+        <section class="form-section">
+          <div class="section-header">
+            <span class="step-badge">3</span>
+            <div class="section-title-wrap">
+              <h3>Doubt Diagnosis & Question Text</h3>
+              <p>Help us pinpoint the exact nature of your doubt for targeted resolution.</p>
+            </div>
+          </div>
+
+          <div class="form-group margin-top-sm">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <label for="question-text" class="form-label" style="margin-bottom: 0;">
+                Question Description / Calculation Steps <span class="required">*</span>
+              </label>
+              <button type="button" id="toggle-math-btn" class="btn btn-outline btn-xs">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 7V4h16v3M9 20h6M12 4v16"/>
+                </svg>
+                Math Keyboard
+              </button>
+            </div>
+            
+            <!-- Formula Bar (Hidden by default) -->
+            <div id="formula-keyboard" class="formula-bar-wrap hidden margin-top-md" style="margin-bottom: 8px;">
+              <span class="formula-label">Symbols:</span>
+              <div class="formula-buttons">
+                <button type="button" class="symbol-btn" data-symbol="√">√x</button>
+                <button type="button" class="symbol-btn" data-symbol="^2">x²</button>
+                <button type="button" class="symbol-btn" data-symbol="∫">∫</button>
+                <button type="button" class="symbol-btn" data-symbol="θ">θ</button>
+                <button type="button" class="symbol-btn" data-symbol="π">π</button>
+                <button type="button" class="symbol-btn" data-symbol="Δ">Δ</button>
+                <button type="button" class="symbol-btn" data-symbol="Σ">Σ</button>
+                <button type="button" class="symbol-btn" data-symbol="∞">∞</button>
+                <button type="button" class="symbol-btn" data-symbol="±">±</button>
+                <button type="button" class="symbol-btn" data-symbol="α">α</button>
+                <button type="button" class="symbol-btn" data-symbol="β">β</button>
+                <button type="button" class="symbol-btn" data-symbol="λ">λ</button>
+              </div>
+            </div>
+
+            <textarea id="question-text" class="form-control textarea" rows="4" required placeholder="Paste or type question text, or detail your working steps..."></textarea>
+          </div>
+
+          <!-- Guidance Style Selector (Socratic vs Full Solution) -->
+          <div class="form-group margin-top-md">
+            <label class="form-label">Preferred Guidance Resolution Mode</label>
+            <div class="radio-chip-group">
+              <label class="chip-option">
+                <input type="radio" name="guidanceStyle" value="Socratic Step-by-Step Hints" checked />
+                <span>💡 Socratic Step-by-Step Hints (Guides without spoiling answer)</span>
+              </label>
+              <label class="chip-option">
+                <input type="radio" name="guidanceStyle" value="Full Worked Solution" />
+                <span>📄 Full Detailed Worked Derivation</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+
+        <!-- Form Submit & Action Bar -->
+        <div class="form-actions-bar">
+          <button type="button" id="reset-btn" class="btn btn-outline">
+            Reset Form
+          </button>
+
+          <div class="action-group">
+            <button type="button" id="export-json-direct-btn" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Quick Export JSON
+            </button>
+
+            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Submit Doubt & View API Payload
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- MODAL 1: Submitted Doubt & Export Payload Inspector -->
+  <div id="export-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="badge badge-success">Form Submitted Successfully</span>
+          <h3 class="modal-title">Doubt Ticket & Exported Payload JSON</h3>
+        </div>
+        <button id="close-modal-btn" class="icon-btn" title="Close Modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Below is the exact <code>JSON</code> object generated by this frontend. Your backend team members can accept this structure via a <code>POST /api/doubts</code> REST API endpoint or <code>FormData</code>.
+        </p>
+
+        <!-- Data Summary Cards -->
+        <div class="payload-summary-grid">
+          <div class="summary-card">
+            <span class="summary-label">Ticket Reference ID</span>
+            <span id="summary-ticket-id" class="summary-value font-mono">DBT-0000</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Class & Subject</span>
+            <span id="summary-class-sub" class="summary-value">Class - Subject</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Chapter</span>
+            <span id="summary-chapter" class="summary-value">Chapter Name</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Photo Upload</span>
+            <span id="summary-attachments" class="summary-value">Photo Attached: Yes</span>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-headers">
+          <button class="tab-btn active" data-tab="tab-json">JSON Payload</button>
+          <button class="tab-btn" data-tab="tab-code">Backend API Code Example</button>
+        </div>
+
+        <div class="tab-content">
+          <!-- Tab 1: JSON Output -->
+          <div id="tab-json" class="tab-pane active">
+            <div class="code-container">
+              <pre><code id="json-output-code">{}</code></pre>
+            </div>
+          </div>
+
+          <!-- Tab 2: Backend Code Sample -->
+          <div id="tab-code" class="tab-pane">
+            <div class="code-container">
+              <pre><code id="fetch-code-sample">// How your backend team member can receive & process this in Node.js / Express or Python
+
+// Option A: Standard JSON Payload fetch request from frontend
+fetch('https://your-api.com/api/doubts', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(exportedDoubtPayload)
+})
+.then(res => res.json())
+.then(data => console.log('Backend response:', data));</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="copy-json-btn" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copy JSON
+        </button>
+
+        <button id="download-json-file-btn" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download Payload (.json)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Backend Integration Guide -->
+  <div id="guide-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Frontend to Backend Export Specifications</h3>
+        <button id="close-guide-btn" class="icon-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <h4>Data Payload Structure</h4>
+        <p>When the student submits this form, the frontend gathers all inputs into a clean JavaScript Object with the following properties:</p>
+
+        <ul class="spec-list">
+          <li><code>class</code> (string): Selected grade/exam level.</li>
+          <li><code>subject</code> (string): Selected academic subject.</li>
+          <li><code>chapter</code> (string): Selected chapter name.</li>
+          <li><code>topic</code> (string): Optional custom topic tag.</li>
+          <li><code>questionText</code> (string): Detailed question description.</li>
+          <li><code>doubtFocus</code> (string): Selected focus (e.g., "Full Step-by-Step Solution").</li>
+          <li><code>photo</code> (object | null): Contains <code>base64</code> image string, <code>fileName</code>, and <code>mimeType</code>.</li>
+          <li><code>preferences</code> (object): Preferred language, solution format, and urgency level.</li>
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button id="close-guide-btn-2" class="btn btn-primary">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
