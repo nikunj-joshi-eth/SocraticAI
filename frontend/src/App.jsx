@@ -15,7 +15,6 @@ import AdaptiveRLEngineSection from './sections/AdaptiveRLEngineSection';
 import LeaderboardSection from './sections/LeaderboardSection';
 import MasterySection from './sections/MasterySection';
 import InteractiveDemoSection from './sections/InteractiveDemoSection';
-import FinalCTASection from './sections/FinalCTASection';
 import Footer from './components/Footer';
 
 function MainAppContent() {
@@ -67,7 +66,6 @@ function MainAppContent() {
         <LeaderboardSection />
         <MasterySection />
         <InteractiveDemoSection />
-        <FinalCTASection />
       </main>
 
       {/* Footer */}
