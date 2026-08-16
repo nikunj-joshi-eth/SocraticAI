@@ -19,15 +19,15 @@ export default {
           crimson: '#DC2626',
           gold: '#F59E0B',
           amber: '#FBBF24',
-          violet: '#EF4444', // Remapped for theme
+          violet: '#EF4444',
           purple: '#F43F5E',
-          cyan: '#F59E0B',   // Remapped for gold accents
+          cyan: '#F59E0B',
           emerald: '#10B981',
           rose: '#F43F5E',
         },
         border: {
-          glass: 'rgba(245, 158, 11, 0.15)',
-          glow: 'rgba(239, 68, 68, 0.4)',
+          glass: 'rgba(245, 158, 11, 0.2)',
+          glow: 'rgba(245, 158, 11, 0.4)',
         }
       },
       fontFamily: {
@@ -36,11 +36,10 @@ export default {
         handwritten: ['Caveat', 'Kalam', 'cursive'],
       },
       boxShadow: {
-        'glow-red': '0 0 40px -10px rgba(239, 68, 68, 0.5)',
-        'glow-gold': '0 0 40px -10px rgba(245, 158, 11, 0.5)',
         'glow-violet': '0 0 40px -10px rgba(239, 68, 68, 0.5)',
         'glow-cyan': '0 0 40px -10px rgba(245, 158, 11, 0.5)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+        'glow-emerald': '0 0 40px -10px rgba(245, 158, 11, 0.4)',
+        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.7)',
       },
       animation: {
         'gradient-x': 'gradient-x 8s ease infinite',
