@@ -7,7 +7,7 @@ const TOP_PRIZES = [
     rank: 1,
     badge: '🥇 RANK 1',
     title: 'Gold Champion Badge + Lifetime Pro Access',
-    description: 'Lifetime Free SocraticAI Pro Pass + Featured Spotlight Profile + Hall of Fame Digital Certificate ($0 Cost).',
+    description: 'Lifetime Free SocraticAI Pro Pass + Featured Spotlight Profile + Hall of Fame Digital Certificate.',
     gradient: 'from-amber-500/20 via-yellow-500/10 to-amber-900/20',
     borderColor: 'border-amber-500/40',
     textColor: 'text-amber-400',
@@ -17,7 +17,7 @@ const TOP_PRIZES = [
     rank: 2,
     badge: '🥈 RANK 2',
     title: '1-Year Free Pro Pass + Master Formula PDFs',
-    description: '12 Months Free Unlimited Doubt Resolution + Exclusive Formula Cheat Sheets PDF Package ($0 Cost).',
+    description: '12 Months Free Unlimited Doubt Resolution + Exclusive Formula Cheat Sheets PDF Package.',
     gradient: 'from-slate-400/20 via-slate-300/10 to-slate-800/20',
     borderColor: 'border-slate-400/40',
     textColor: 'text-slate-300',
@@ -27,7 +27,7 @@ const TOP_PRIZES = [
     rank: 3,
     badge: '🥉 RANK 3',
     title: '6-Month Free Pro Pass + Verified Scholar Badge',
-    description: '6 Months Free Unlimited Doubt Resolution + Verified Scholar Digital Badge & Certificate ($0 Cost).',
+    description: '6 Months Free Unlimited Doubt Resolution + Verified Scholar Digital Badge & Certificate.',
     gradient: 'from-amber-700/20 via-orange-600/10 to-amber-950/20',
     borderColor: 'border-amber-700/40',
     textColor: 'text-amber-600',
@@ -83,7 +83,7 @@ export default function LeaderboardSection() {
         </h2>
         
         <p className="text-slate-400 text-base sm:text-lg">
-          Solve doubts daily, build streak multipliers, and climb your dedicated exam leaderboard. Top rankers unlock free Lifetime Pro passes, digital badges, and formula guides ($0 cost)!
+          Solve doubts daily, build streak multipliers, and climb your dedicated exam leaderboard. Top rankers unlock free Lifetime Pro passes, digital badges, and formula guides!
         </p>
       </div>
 
@@ -115,7 +115,7 @@ export default function LeaderboardSection() {
               <span className="flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Digital Perk
               </span>
-              <span className="text-amber-400 font-semibold">100% Free / Instant Unlock</span>
+              <span className="text-amber-400 font-semibold">Instant Unlock</span>
             </div>
           </div>
         ))}
