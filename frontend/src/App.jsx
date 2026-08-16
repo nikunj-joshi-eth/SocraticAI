@@ -9,7 +9,6 @@ import Navbar from './components/Navbar';
 import HeroSection from './sections/HeroSection';
 import ProblemSection from './sections/ProblemSection';
 import VisionSection from './sections/VisionSection';
-import GuidanceSection from './sections/GuidanceSection';
 import DoubtPortalSection from './sections/DoubtPortalSection';
 import AdaptiveRLEngineSection from './sections/AdaptiveRLEngineSection';
 import LeaderboardSection from './sections/LeaderboardSection';
@@ -60,7 +59,6 @@ function MainAppContent() {
         <HeroSection />
         <ProblemSection />
         <VisionSection />
-        <GuidanceSection />
         <DoubtPortalSection />
         <AdaptiveRLEngineSection />
         <LeaderboardSection />
