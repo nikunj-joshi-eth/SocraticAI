@@ -1,5 +1,6 @@
-import React from 'react';
-import { Trophy, Award, Sparkles, Zap, Target, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Trophy, Award, Sparkles, Zap, Target, Stethoscope, Compass } from 'lucide-react';
+import { useExam } from '../context/ExamContext';
 
 const TOP_PRIZES = [
   {
@@ -16,7 +17,7 @@ const TOP_PRIZES = [
     rank: 2,
     badge: '🥈 RANK 2',
     title: '1-Year Free Pro Pass + Master Formula PDFs',
-    description: '12 Months Free Unlimited Doubt Resolution + Exclusive JEE/NEET Formula Cheat Sheets PDF Package ($0 Cost).',
+    description: '12 Months Free Unlimited Doubt Resolution + Exclusive Formula Cheat Sheets PDF Package ($0 Cost).',
     gradient: 'from-slate-400/20 via-slate-300/10 to-slate-800/20',
     borderColor: 'border-slate-400/40',
     textColor: 'text-slate-300',
@@ -34,15 +35,37 @@ const TOP_PRIZES = [
   }
 ];
 
-const LEADERBOARD_STUDENTS = [
-  { rank: 1, name: 'Aarav Sharma', exam: 'JEE Advanced', college: 'IIT Bombay', xp: 4850, streak: 14, accuracy: '94.5%' },
-  { rank: 2, name: 'Ananya Patel', exam: 'NEET UG', college: 'AIIMS New Delhi', xp: 4320, streak: 12, accuracy: '92.0%' },
-  { rank: 3, name: 'Rohan Gupta', exam: 'JEE Main', college: 'NIT Trichy', xp: 3980, streak: 9, accuracy: '89.2%' },
-  { rank: 4, name: 'Priyanjali Sen', exam: 'NEET UG', college: 'JIPMER Puducherry', xp: 3450, streak: 7, accuracy: '87.5%' },
-  { rank: 5, name: 'Vikramaditya Verma', exam: 'JEE Advanced', college: 'IIT Delhi', xp: 3120, streak: 6, accuracy: '85.0%' },
+const JEE_LEADERBOARD_STUDENTS = [
+  { rank: 1, name: 'Aarav Sharma', exam: 'JEE Advanced', college: 'IIT Bombay (CSE)', xp: 4850, streak: 14, accuracy: '94.5%' },
+  { rank: 2, name: 'Rohan Gupta', exam: 'JEE Main', college: 'NIT Trichy (CSE)', xp: 3980, streak: 9, accuracy: '89.2%' },
+  { rank: 3, name: 'Vikramaditya Verma', exam: 'JEE Advanced', college: 'IIT Delhi (Electrical)', xp: 3120, streak: 6, accuracy: '85.0%' },
+  { rank: 4, name: 'Siddharth Nambiar', exam: 'JEE Advanced', college: 'IIT Madras (Mechanical)', xp: 2890, streak: 5, accuracy: '83.4%' },
+  { rank: 5, name: 'Kavya Deshmukh', exam: 'JEE Main', college: 'IIIT Hyderabad', xp: 2650, streak: 4, accuracy: '82.1%' },
+];
+
+const NEET_LEADERBOARD_STUDENTS = [
+  { rank: 1, name: 'Ananya Patel', exam: 'NEET UG', college: 'AIIMS New Delhi', xp: 4920, streak: 16, accuracy: '96.2%' },
+  { rank: 2, name: 'Priyanjali Sen', exam: 'NEET UG', college: 'JIPMER Puducherry', xp: 4150, streak: 11, accuracy: '91.5%' },
+  { rank: 3, name: 'Devansh Reddy', exam: 'NEET UG', college: 'KGMU Lucknow', xp: 3760, streak: 8, accuracy: '88.7%' },
+  { rank: 4, name: 'Meera Krishnan', exam: 'NEET UG', college: 'MMC Chennai', xp: 3320, streak: 7, accuracy: '86.4%' },
+  { rank: 5, name: 'Ishaan Choudhury', exam: 'NEET UG', college: 'VMMC New Delhi', xp: 2980, streak: 5, accuracy: '84.1%' },
 ];
 
 export default function LeaderboardSection() {
+  const { targetExam } = useExam();
+  const [activeLeaderboardTab, setActiveLeaderboardTab] = useState('JEE');
+
+  // Sync leaderboard tab with active target exam
+  useEffect(() => {
+    if (targetExam.includes('NEET')) {
+      setActiveLeaderboardTab('NEET');
+    } else {
+      setActiveLeaderboardTab('JEE');
+    }
+  }, [targetExam]);
+
+  const activeStudents = activeLeaderboardTab === 'NEET' ? NEET_LEADERBOARD_STUDENTS : JEE_LEADERBOARD_STUDENTS;
+
   return (
     <section id="leaderboard" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
       {/* Background ambient lighting */}
@@ -60,7 +83,7 @@ export default function LeaderboardSection() {
         </h2>
         
         <p className="text-slate-400 text-base sm:text-lg">
-          Solve doubts daily, build streak multipliers, and climb the All-India Leaderboard. Top 3 rankers unlock free Lifetime Pro passes, digital badges, and exclusive PDF formula guides ($0 cost)!
+          Solve doubts daily, build streak multipliers, and climb your dedicated exam leaderboard. Top rankers unlock free Lifetime Pro passes, digital badges, and formula guides ($0 cost)!
         </p>
       </div>
 
@@ -98,20 +121,47 @@ export default function LeaderboardSection() {
         ))}
       </div>
 
-      {/* Live All-India Student Leaderboard Table */}
+      {/* Dedicated Exam Leaderboard Switcher & Table */}
       <div className="relative z-10 bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+        
+        {/* Switcher Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <Award className="w-6 h-6 text-brand-cyan" />
             <h3 className="text-lg sm:text-xl font-bold text-slate-100">
-              Current All-India Top Aspirants
+              {activeLeaderboardTab === 'JEE' ? '⚡ All-India JEE Leaderboard (Main & Advanced)' : '🩺 All-India NEET UG Leaderboard'}
             </h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">
-            Updated Real-time
-          </span>
+
+          {/* Exam Leaderboard Toggle Buttons */}
+          <div className="flex items-center gap-2 bg-[#050508] p-1 rounded-xl border border-slate-800">
+            <button
+              onClick={() => setActiveLeaderboardTab('JEE')}
+              className={`px-4 py-2 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all ${
+                activeLeaderboardTab === 'JEE'
+                  ? 'bg-brand-violet text-white shadow-glow-violet'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>JEE Aspirants</span>
+            </button>
+
+            <button
+              onClick={() => setActiveLeaderboardTab('NEET')}
+              className={`px-4 py-2 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all ${
+                activeLeaderboardTab === 'NEET'
+                  ? 'bg-emerald-600 text-white shadow-glow-emerald'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Stethoscope className="w-3.5 h-3.5" />
+              <span>NEET Aspirants</span>
+            </button>
+          </div>
         </div>
 
+        {/* Dynamic Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-slate-300">
             <thead className="text-xs uppercase bg-slate-800/50 text-slate-400 border-b border-slate-800">
@@ -125,7 +175,7 @@ export default function LeaderboardSection() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/50">
-              {LEADERBOARD_STUDENTS.map((student) => (
+              {activeStudents.map((student) => (
                 <tr key={student.rank} className="hover:bg-slate-800/30 transition-colors">
                   <td className="py-4 px-4 font-bold">
                     {student.rank === 1 && <span className="text-amber-400">🥇 #1</span>}
@@ -137,7 +187,11 @@ export default function LeaderboardSection() {
                     {student.name}
                   </td>
                   <td className="py-4 px-4">
-                    <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-brand-violet/20 border border-brand-violet/30 text-brand-violet-light">
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-medium border ${
+                      activeLeaderboardTab === 'NEET'
+                        ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
+                        : 'bg-brand-violet/20 border-brand-violet/30 text-brand-violet-light'
+                    }`}>
                       {student.exam}
                     </span>
                   </td>
