@@ -181,21 +181,21 @@ export default function DoubtPortalSection() {
             {/* Form */}
             <form onSubmit={handleFormSubmit} className="space-y-8">
               
-              {/* STEP 1: Syllabus Cascade Selectors */}
+              {/* STEP 1: Exam & Subject Context (AI Auto-Detects Chapter & Subtopic) */}
               <div>
-                <div className="text-xs font-mono font-bold text-brand-cyan uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan flex items-center justify-center text-[10px]">1</span>
-                  Select Syllabus & Chapter Context
+                <div className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-[10px]">1</span>
+                  Select Target Exam & Subject Goal
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Exam Target */}
                   <div>
                     <label className="block text-xs font-mono text-slate-400 mb-1.5">Target Exam *</label>
                     <select
                       value={targetExam}
                       onChange={(e) => setTargetExam(e.target.value)}
-                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-brand-cyan"
+                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-amber-500"
                     >
                       <option value="JEE Main">JEE Main</option>
                       <option value="JEE Advanced">JEE Advanced</option>
@@ -205,56 +205,14 @@ export default function DoubtPortalSection() {
 
                   {/* Subject */}
                   <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">Subject *</label>
+                    <label className="block text-xs font-mono text-slate-400 mb-1.5">Subject (Or let AI Auto-Detect) *</label>
                     <select
                       value={selectedSubject}
                       onChange={(e) => setSelectedSubject(e.target.value)}
-                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-brand-cyan"
+                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-amber-500"
                     >
                       {availableSubjects.map(subj => (
                         <option key={subj} value={subj}>{subj}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Class */}
-                  <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">Class Level *</label>
-                    <select
-                      value={selectedClass}
-                      onChange={(e) => setSelectedClass(e.target.value)}
-                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-brand-cyan"
-                    >
-                      <option value="11">Class 11</option>
-                      <option value="12">Class 12</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Chapter & Subtopic Selectors */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">Chapter *</label>
-                    <select
-                      value={selectedChapter}
-                      onChange={(e) => setSelectedChapter(e.target.value)}
-                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-brand-cyan"
-                    >
-                      {chaptersForSubjectAndClass.map(ch => (
-                        <option key={ch.chapter} value={ch.chapter}>{ch.chapter}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">Subtopic *</label>
-                    <select
-                      value={selectedSubtopic}
-                      onChange={(e) => setSelectedSubtopic(e.target.value)}
-                      className="w-full bg-[#050508] border border-white/15 text-white text-xs font-mono rounded-xl p-3 focus:outline-none focus:border-brand-cyan"
-                    >
-                      {availableSubtopics.map(sub => (
-                        <option key={sub} value={sub}>{sub}</option>
                       ))}
                     </select>
                   </div>
