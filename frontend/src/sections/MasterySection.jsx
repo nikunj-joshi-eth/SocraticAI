@@ -46,7 +46,7 @@ export default function MasterySection() {
   }, [isInView]);
 
   return (
-    <section ref={ref} className="py-24 px-4 md:px-8 relative z-10">
+    <section id="mastery" ref={ref} className="py-24 px-4 md:px-8 relative z-10">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
