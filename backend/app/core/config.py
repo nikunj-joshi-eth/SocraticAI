@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     app_env: str = "development"
 
     gemini_api_key: str = ""
-    database_url: str = ""
+    supabase_url: str = ""
+    supabase_key: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env",
