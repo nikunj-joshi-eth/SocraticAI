@@ -5,3 +5,11 @@ dist
 .vite
 **/.vite
 .DS_Store
+
+# Environment & Virtual Env
+.env
+*.env
+venv/
+*.venv
+__pycache__/
+

@@ -12,6 +12,7 @@ import VisionSection from './sections/VisionSection';
 import GuidanceSection from './sections/GuidanceSection';
 import DoubtPortalSection from './sections/DoubtPortalSection';
 import AdaptiveRLEngineSection from './sections/AdaptiveRLEngineSection';
+import LeaderboardSection from './sections/LeaderboardSection';
 import MasterySection from './sections/MasterySection';
 import InteractiveDemoSection from './sections/InteractiveDemoSection';
 import FinalCTASection from './sections/FinalCTASection';
@@ -63,6 +64,7 @@ function MainAppContent() {
         <GuidanceSection />
         <DoubtPortalSection />
         <AdaptiveRLEngineSection />
+        <LeaderboardSection />
         <MasterySection />
         <InteractiveDemoSection />
         <FinalCTASection />
