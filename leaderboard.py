@@ -20,29 +20,29 @@ class LeaderboardEntry(BaseModel):
     accuracy_percentage: float
     prize: Optional[PrizeInfo] = None
 
-# Legendary Prizes Configuration
+# Zero-Cost ($0 Budget) Digital Legendary Prizes Configuration
 LEGENDARY_PRIZES = {
     1: PrizeInfo(
         rank=1,
         badge="🥇 RANK 1",
-        prize_title="100% Scholarship + iPad & Grand Trophy",
-        prize_description="Full 1-Year Coaching Scholarship + Apple iPad Air + Golden SocraticAI Trophy"
+        prize_title="Gold Champion Badge + Lifetime Pro Access",
+        prize_description="Lifetime Free SocraticAI Pro Pass + Featured Spotlight Profile + Hall of Fame Digital Certificate"
     ),
     2: PrizeInfo(
         rank=2,
         badge="🥈 RANK 2",
-        prize_title="Full Test Series Pass & Hardcopy Book Bundle",
-        prize_description="Complete All-India Mock Test Series + Physical Book Set (Physics, Chemistry, Math/Bio)"
+        prize_title="1-Year Free Pro Pass + Master Formula PDFs",
+        prize_description="12 Months Free Unlimited Doubt Resolution + Exclusive JEE/NEET Formula Cheat Sheets PDF Package"
     ),
     3: PrizeInfo(
         rank=3,
         badge="🥉 RANK 3",
-        prize_title="1-Year Premium Pass & Official Swag Kit",
-        prize_description="12 Months SocraticAI Unlimited Pro Pass + Official SocraticAI Hoodie & Merch Kit"
+        prize_title="6-Month Free Pro Pass + Verified Scholar Badge",
+        prize_description="6 Months Free Unlimited Doubt Resolution + Verified Scholar Digital Badge & Certificate"
     )
 }
 
-# Initial Mock Leaderboard Data (Byju's / Allen style competitive leaderboard)
+# Initial Mock Leaderboard Data
 INITIAL_LEADERBOARD: List[Dict[str, Any]] = [
     {
         "student_id": "STU_101",
@@ -98,7 +98,7 @@ INITIAL_LEADERBOARD: List[Dict[str, Any]] = [
 
 class LeaderboardManager:
     """
-    Manages Student Leaderboard, XP calculation, Streaks, and Legendary Prizes.
+    Manages Student Leaderboard, XP calculation, Streaks, and $0 Cost Digital Legendary Prizes.
     """
     def __init__(self):
         self.entries: List[LeaderboardEntry] = []
@@ -111,7 +111,6 @@ class LeaderboardManager:
         self._recalculate_ranks()
 
     def _recalculate_ranks(self):
-        # Sort descending by XP points
         self.entries.sort(key=lambda x: x.xp_points, reverse=True)
         for idx, entry in enumerate(self.entries, start=1):
             entry.rank = idx
@@ -126,14 +125,8 @@ class LeaderboardManager:
         streak: int,
         difficulty: str = "MEDIUM"
     ) -> int:
-        """
-        Calculates XP points earned for a problem attempt:
-        - Base: 100 XP
-        - Streak Bonus: +20 XP per consecutive streak (max +100)
-        - Difficulty Multiplier: Easy (+0), Medium (+25), JEE Advanced / Hard (+50)
-        """
         if not is_correct:
-            return 0  # Zero penalty - "encouragement first"
+            return 0
 
         base_xp = 100
         streak_bonus = min(streak * 20, 100)
@@ -157,10 +150,6 @@ class LeaderboardManager:
         is_correct: bool = True,
         difficulty: str = "MEDIUM"
     ) -> Tuple[LeaderboardEntry, int]:
-        """
-        Updates student stats or creates new student entry, calculates XP, and assigns updated Rank & Prize.
-        """
-        # Find existing student or create new
         student_entry = next((e for e in self.entries if e.student_id == student_id), None)
         
         if not student_entry:
@@ -177,7 +166,6 @@ class LeaderboardManager:
             )
             self.entries.append(student_entry)
 
-        # Update stats
         if is_correct:
             student_entry.streak_count += 1
             student_entry.questions_solved += 1
@@ -191,13 +179,12 @@ class LeaderboardManager:
         return student_entry, xp_earned
 
     def get_top_leaderboard(self, limit: int = 5) -> List[LeaderboardEntry]:
-        """Returns Top N leaderboard entries."""
         return self.entries[:limit]
 
 leaderboard_manager = LeaderboardManager()
 
 if __name__ == "__main__":
-    print("=== Testing Gamified Leaderboard & Legendary Prizes ===")
+    print("=== Testing Zero-Cost Digital Leaderboard & Prizes ===")
     top_entries = leaderboard_manager.get_top_leaderboard(3)
     for e in top_entries:
         print(f"{e.prize.badge}: {e.student_name} ({e.xp_points} XP) - Prize: {e.prize.prize_title}")

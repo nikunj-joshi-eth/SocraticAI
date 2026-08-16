@@ -1,12 +1,12 @@
 import React from 'react';
-import { Trophy, Award, Gift, Zap, Target, Star } from 'lucide-react';
+import { Trophy, Award, Sparkles, Zap, Target, FileText } from 'lucide-react';
 
 const TOP_PRIZES = [
   {
     rank: 1,
     badge: '🥇 RANK 1',
-    title: '100% Scholarship + Apple iPad Air',
-    description: 'Full 1-Year Coaching Scholarship + Apple iPad Air + Golden SocraticAI Trophy Badge.',
+    title: 'Gold Champion Badge + Lifetime Pro Access',
+    description: 'Lifetime Free SocraticAI Pro Pass + Featured Spotlight Profile + Hall of Fame Digital Certificate ($0 Cost).',
     gradient: 'from-amber-500/20 via-yellow-500/10 to-amber-900/20',
     borderColor: 'border-amber-500/40',
     textColor: 'text-amber-400',
@@ -15,8 +15,8 @@ const TOP_PRIZES = [
   {
     rank: 2,
     badge: '🥈 RANK 2',
-    title: 'Full Test Series & Book Bundle',
-    description: 'Complete All-India Mock Test Series Pass + Hardcopy Physics, Chemistry & Math Book Set.',
+    title: '1-Year Free Pro Pass + Master Formula PDFs',
+    description: '12 Months Free Unlimited Doubt Resolution + Exclusive JEE/NEET Formula Cheat Sheets PDF Package ($0 Cost).',
     gradient: 'from-slate-400/20 via-slate-300/10 to-slate-800/20',
     borderColor: 'border-slate-400/40',
     textColor: 'text-slate-300',
@@ -25,8 +25,8 @@ const TOP_PRIZES = [
   {
     rank: 3,
     badge: '🥉 RANK 3',
-    title: '1-Year Premium + Official Swag Kit',
-    description: '12 Months Unlimited Pro Pass + Official SocraticAI Hoodie & Merch Kit.',
+    title: '6-Month Free Pro Pass + Verified Scholar Badge',
+    description: '6 Months Free Unlimited Doubt Resolution + Verified Scholar Digital Badge & Certificate ($0 Cost).',
     gradient: 'from-amber-700/20 via-orange-600/10 to-amber-950/20',
     borderColor: 'border-amber-700/40',
     textColor: 'text-amber-600',
@@ -56,11 +56,11 @@ export default function LeaderboardSection() {
         </div>
         
         <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-100 tracking-tight mb-4">
-          Earn XP, Conquer Doubts & Win <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">Legendary Prizes</span>
+          Earn XP, Conquer Doubts & Win <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">Digital Legendary Rewards</span>
         </h2>
         
         <p className="text-slate-400 text-base sm:text-lg">
-          Solve doubts daily, build streak multipliers, and climb the All-India Leaderboard. Top 3 rankers each month win exclusive hardware & scholarship rewards!
+          Solve doubts daily, build streak multipliers, and climb the All-India Leaderboard. Top 3 rankers unlock free Lifetime Pro passes, digital badges, and exclusive PDF formula guides ($0 cost)!
         </p>
       </div>
 
@@ -90,9 +90,9 @@ export default function LeaderboardSection() {
 
             <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
               <span className="flex items-center gap-1">
-                <Gift className="w-3.5 h-3.5 text-amber-400" /> Monthly Reward
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Digital Perk
               </span>
-              <span className="text-amber-400 font-semibold">Automatic Dispatch</span>
+              <span className="text-amber-400 font-semibold">100% Free / Instant Unlock</span>
             </div>
           </div>
         ))}
