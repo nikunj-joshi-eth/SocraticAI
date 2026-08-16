@@ -37,7 +37,7 @@ function MainAppContent() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#080305] text-[#F8FAFC] font-sans selection:bg-rose-500/30 selection:text-amber-400 overflow-x-hidden bg-noise">
+    <div className="relative min-h-screen bg-[#050507] text-[#F8FAFC] font-sans selection:bg-brand-violet/30 selection:text-brand-cyan overflow-x-hidden bg-noise">
       {/* Onboarding Target Exam Selection Modal */}
       <OnboardingModal />
 

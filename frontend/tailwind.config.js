@@ -9,25 +9,22 @@ export default {
     extend: {
       colors: {
         bg: {
-          dark: '#080305',
-          card: '#120609',
-          elevated: '#1B0A0E',
-          glass: 'rgba(18, 6, 9, 0.8)',
+          dark: '#050507',
+          card: '#0A0A0F',
+          elevated: '#0F0F17',
+          glass: 'rgba(10, 10, 15, 0.75)',
         },
         brand: {
-          red: '#EF4444',
-          crimson: '#DC2626',
-          gold: '#F59E0B',
-          amber: '#FBBF24',
-          violet: '#EF4444',
-          purple: '#F43F5E',
-          cyan: '#F59E0B',
+          violet: '#8B5CF6',
+          purple: '#A855F7',
+          cyan: '#22D3EE',
           emerald: '#10B981',
+          amber: '#F59E0B',
           rose: '#F43F5E',
         },
         border: {
-          glass: 'rgba(245, 158, 11, 0.2)',
-          glow: 'rgba(245, 158, 11, 0.4)',
+          glass: 'rgba(255, 255, 255, 0.08)',
+          glow: 'rgba(139, 92, 246, 0.3)',
         }
       },
       fontFamily: {
@@ -36,10 +33,10 @@ export default {
         handwritten: ['Caveat', 'Kalam', 'cursive'],
       },
       boxShadow: {
-        'glow-violet': '0 0 40px -10px rgba(239, 68, 68, 0.5)',
-        'glow-cyan': '0 0 40px -10px rgba(245, 158, 11, 0.5)',
-        'glow-emerald': '0 0 40px -10px rgba(245, 158, 11, 0.4)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.7)',
+        'glow-violet': '0 0 40px -10px rgba(139, 92, 246, 0.4)',
+        'glow-cyan': '0 0 40px -10px rgba(34, 211, 238, 0.4)',
+        'glow-emerald': '0 0 40px -10px rgba(16, 185, 129, 0.4)',
+        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
       },
       animation: {
         'gradient-x': 'gradient-x 8s ease infinite',
