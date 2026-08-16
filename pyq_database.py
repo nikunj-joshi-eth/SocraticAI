@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 class PYQItem(BaseModel):
-    pyq_id: str = Field(description="Unique PYQ reference, e.g., 'JEE_ADVANCED_2023_P1'")
+    pyq_id: str = Field(description="Unique PYQ reference, e.g., 'JEE_ADVANCED_2023_P1_Q4'")
     exam_type: str = Field(description="JEE Main, JEE Advanced, NEET UG")
     year: int
     subject: str
@@ -101,7 +101,7 @@ PYQ_DATABASE: List[PYQItem] = [
         difficulty="MEDIUM"
     ),
 
-    # Mathematics - Calculus & 3D Geometry
+    # Mathematics - Calculus & 3D Geometry (JEE Only!)
     PYQItem(
         pyq_id="JEE_ADVANCED_2021_P1_Q2",
         exam_type="JEE Advanced",
@@ -129,7 +129,7 @@ PYQ_DATABASE: List[PYQItem] = [
         difficulty="JEE_ADVANCED"
     ),
 
-    # Biology - Genetics & Physiology (NEET)
+    # Biology - Genetics & Physiology (NEET Only!)
     PYQItem(
         pyq_id="NEET_2023_BIO_Q14",
         exam_type="NEET UG",
@@ -148,31 +148,42 @@ PYQ_DATABASE: List[PYQItem] = [
 def search_similar_pyqs(
     subject: str,
     chapter: str,
+    target_exam: str = "JEE Advanced",
     limit: int = 2
 ) -> List[PYQItem]:
     """
-    Retrieves matching PYQs from dataset based on subject and chapter.
-    Falls back to subject-level matching if chapter exact match yields insufficient results.
+    Strict Exam-Filtered Search for PYQs:
+    - Never return Biology for JEE Main/Advanced.
+    - Never return Mathematics for NEET UG.
     """
+    is_neet = "NEET" in target_exam.upper()
+    
+    # Filter valid subjects based on target exam
+    valid_pyqs = [
+        p for p in PYQ_DATABASE 
+        if (is_neet and p.subject.lower() != "mathematics") or (not is_neet and p.subject.lower() != "biology")
+    ]
+    
     exact_matches = [
-        item for item in PYQ_DATABASE 
+        item for item in valid_pyqs 
         if item.subject.lower() == subject.lower() and chapter.lower() in item.chapter.lower()
     ]
     
     if len(exact_matches) >= limit:
         return exact_matches[:limit]
         
-    # Subject-level fallback
-    subject_matches = [item for item in PYQ_DATABASE if item.subject.lower() == subject.lower()]
+    subject_matches = [item for item in valid_pyqs if item.subject.lower() == subject.lower()]
     combined = exact_matches + [m for m in subject_matches if m not in exact_matches]
     
     if combined:
         return combined[:limit]
         
-    return random.sample(PYQ_DATABASE, min(limit, len(PYQ_DATABASE)))
+    return random.sample(valid_pyqs, min(limit, len(valid_pyqs)))
 
 if __name__ == "__main__":
-    print("=== Testing PYQ Database Engine ===")
-    pyqs = search_similar_pyqs(subject="Physics", chapter="Electrostatics")
-    for p in pyqs:
-        print(f"[{p.pyq_id}] ({p.exam_type} {p.year}): {p.question_latex[:60]}...")
+    print("=== Testing Strict Exam-Filtered PYQ Database Engine ===")
+    jee_pyqs = search_similar_pyqs(subject="Physics", chapter="Electrostatics", target_exam="JEE Advanced")
+    print(f"JEE Advanced Matches: {[p.pyq_id for p in jee_pyqs]}")
+    
+    neet_pyqs = search_similar_pyqs(subject="Biology", chapter="Genetics", target_exam="NEET UG")
+    print(f"NEET Matches: {[p.pyq_id for p in neet_pyqs]}")
