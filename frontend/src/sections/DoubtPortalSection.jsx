@@ -22,6 +22,7 @@ export default function DoubtPortalSection() {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   const taxonomy = chaptersData.JEE_NEET_Exhaustive_Syllabus_Taxonomy;
 
@@ -275,6 +276,15 @@ export default function DoubtPortalSection() {
                   className="hidden"
                 />
 
+                <input
+                  type="file"
+                  ref={cameraInputRef}
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                />
+
                 {!imagePreview ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <button
@@ -289,7 +299,7 @@ export default function DoubtPortalSection() {
 
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
+                      onClick={() => cameraInputRef.current?.click()}
                       className="p-6 rounded-2xl bg-[#050508] border border-dashed border-white/20 hover:border-brand-violet text-center flex flex-col items-center justify-center gap-2 transition-all group"
                     >
                       <Camera className="w-6 h-6 text-slate-400 group-hover:text-brand-purple transition-colors" />
