@@ -9,7 +9,7 @@ class PrizeInfo(BaseModel):
     prize_description: str
 
 class LeaderboardEntry(BaseModel):
-    rank: int
+    rank: Optional[int] = 0
     student_id: str
     student_name: str
     target_exam: str  # "JEE Main", "JEE Advanced", "NEET UG"
