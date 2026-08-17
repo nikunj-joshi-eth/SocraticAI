@@ -4,6 +4,7 @@ import { Send, Camera, Upload, X, CheckCircle2, FileJson, Sparkles, BookOpen, La
 import TiltCard from '../components/TiltCard';
 import { useExam } from '../context/ExamContext';
 import { analyzeQuestion } from '../services/api';
+import MathText from '../components/MathText';
 
 export default function DoubtPortalSection() {
   const { targetExam, setTargetExam } = useExam();
@@ -63,15 +64,15 @@ export default function DoubtPortalSection() {
           subject: a.subject || selectedSubject,
           chapter: a.chapter || "Algebra — Mathematical Induction",
           subtopic: a.subtopic || "Divisibility Properties & Base Case Proofs",
-          detectedProblem: a.detected_problem_latex || "If n ∈ ℕ, then 7^(2n) + 2^(3n-3) · 3^(n-1) + n² - 3n + 2 is always divisible by...",
+          detectedProblem: a.detected_problem_latex || "If n is a natural number (n ∈ ℕ), then 7²ⁿ + 2³ⁿ⁻³ · 3ⁿ⁻¹ + n² - 3n + 2 is always divisible by...",
           errorTag: a.error_type || errorTag,
-          errorAnalysis: a.error_analysis || "Attempted direct algebraic expansion without evaluating base case n = 1.",
+          errorAnalysis: a.error_analysis || "Attempted direct algebraic expansion without testing the base case n = 1 to check factor divisibility.",
           socraticHints: a.socratic_hints && a.socratic_hints.length > 0 
             ? a.socratic_hints.map(h => typeof h === 'string' ? h : h.hint)
             : [
-                "What is the simplest base value of n in ℕ you can test first?",
-                "For n = 1, evaluate 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. What numbers divide 50?",
-                "Now test n = 2 to see if 25 or another candidate factor remains a common divisor."
+                "What is the smallest natural number n (n = 1) you can substitute first to check the options?",
+                "For n = 1, substituting into the expression gives: 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. Which option (25, 35, 45) divides 50?",
+                "Now test n = 2 (7⁴ + 2³ · 3¹ + 4 - 6 + 2 = 2425 = 25 × 97) to verify if 25 remains the common factor for all n."
               ],
           xpEarned: a.xp_earned || 145
         });
@@ -95,20 +96,20 @@ export default function DoubtPortalSection() {
         chapter: isInductionOrMath ? "Algebra — Mathematical Induction" : "Physics — Rotational Mechanics",
         subtopic: isInductionOrMath ? "Divisibility Properties & Base Cases" : "Torque & Angular Acceleration",
         detectedProblem: isInductionOrMath 
-          ? "If n ∈ ℕ, then 7^(2n) + 2^(3n-3) · 3^(n-1) + n² - 3n + 2 is always divisible by..."
+          ? "If n is a natural number (n ∈ ℕ), then 7²ⁿ + 2³ⁿ⁻³ · 3ⁿ⁻¹ + n² - 3n + 2 is always divisible by..."
           : "Find the torque and linear acceleration of the rolling cylinder on rough incline θ.",
         errorTag: errorTag,
         errorAnalysis: isInductionOrMath
-          ? "Attempted direct algebraic expansion without evaluating the base case $n = 1$ to check candidate factors."
-          : "Forgot to include static friction torque $\\tau = f R$ in angular acceleration equation.",
+          ? "Attempted direct algebraic expansion without evaluating the base case n = 1 to check candidate factors."
+          : "Forgot to include static friction torque τ = f R in angular acceleration equation.",
         socraticHints: isInductionOrMath ? [
-          "Step 1: What is the smallest base natural number $n \\in \\mathbb{N}$ you can test to check candidate options?",
-          "Step 2: Substituting $n = 1$ yields $7^2 + 2^0 \\cdot 3^0 + 1^2 - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50$. Which of the options (25, 35, 45) divides 50?",
-          "Step 3: Verify for $n = 2$ ($7^4 + 2^3 \\cdot 3^1 + 4 - 6 + 2 = 2401 + 24 + 0 = 2425$). Notice $2425 = 25 \\times 97$. What is the common factor?"
+          "Step 1: What is the smallest natural number n (n = 1) you can substitute first to check candidate options?",
+          "Step 2: Substituting n = 1 yields: 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. Which of the options (25, 35, 45) divides 50?",
+          "Step 3: Test n = 2 (7⁴ + 2³ · 3¹ + 4 - 6 + 2 = 2425 = 25 × 97) to verify if 25 remains the common factor for all natural numbers n."
         ] : [
-          "Step 1: Write down the torque equation about the center of mass: $\\tau = I\\alpha$. What force creates torque?",
-          "Step 2: Relate linear acceleration $a$ to angular acceleration $\\alpha$ assuming pure rolling ($a = \\alpha R$).",
-          "Step 3: Solve the simultaneous equations $Mg \\sin\\theta - f = Ma$ and $f R = I (a/R)$ for friction force $f$."
+          "Step 1: Write down the torque equation about the center of mass: τ = I α. What force creates torque?",
+          "Step 2: Relate linear acceleration a to angular acceleration α assuming pure rolling (a = α R).",
+          "Step 3: Solve simultaneous equations Mg sin θ - f = Ma and f R = I (a / R) for friction force f."
         ],
         xpEarned: 145
       });
@@ -167,7 +168,7 @@ export default function DoubtPortalSection() {
             viewport={{ once: true }}
             className="text-base sm:text-lg text-slate-400"
           >
-            Snap notebook photos or type your doubt. SocraticAI automatically extracts the syllabus chapter, transcribes math into LaTeX, and prompts 3 progressive hints without ever spoiling the answer!
+            Snap notebook photos or type your doubt. SocraticAI automatically extracts the syllabus chapter, transcribes math cleanly, and prompts 3 progressive hints without ever spoiling the answer!
           </motion.p>
         </div>
 
@@ -316,7 +317,7 @@ export default function DoubtPortalSection() {
                       rows={3}
                       value={questionText}
                       onChange={(e) => setQuestionText(e.target.value)}
-                      placeholder="e.g. 'If n is in N, then 7^(2n) + 2^(3n-3)*3^(n-1) + n^2 - 3n + 2 is divisible by...'"
+                      placeholder="e.g. 'If n is a natural number, then 7^(2n) + 2^(3n-3)*3^(n-1) + n^2 - 3n + 2 is divisible by...'"
                       className="w-full bg-[#050508] border border-white/15 rounded-xl p-3 text-xs text-white font-mono placeholder:text-slate-600 focus:outline-none focus:border-brand-cyan"
                     />
                   </div>
@@ -398,8 +399,8 @@ export default function DoubtPortalSection() {
 
                   {/* Transcribed Problem */}
                   <div className="mb-4 bg-[#050508] p-3.5 rounded-xl border border-white/10 text-xs font-mono">
-                    <span className="text-slate-400 block mb-1 text-[10px]">Transcribed LaTeX Problem Statement:</span>
-                    <p className="text-white italic">"{submittedResult.detectedProblem}"</p>
+                    <span className="text-slate-400 block mb-1 text-[10px]">Transcribed Problem Statement:</span>
+                    <p className="text-white font-medium">"{submittedResult.detectedProblem}"</p>
                   </div>
 
                   {/* Error Breakdown */}
@@ -434,7 +435,7 @@ export default function DoubtPortalSection() {
                     </div>
 
                     <div className="p-4 rounded-xl bg-brand-violet/10 border border-brand-violet/30 text-xs sm:text-sm font-mono text-slate-200 leading-relaxed">
-                      {submittedResult.socraticHints[activeHintStep - 1]}
+                      <MathText text={submittedResult.socraticHints[activeHintStep - 1]} />
                     </div>
 
                     {activeHintStep < 3 && (
