@@ -12,9 +12,6 @@ client = genai.Client(
     api_key=settings.gemini_api_key
 )
 
-MODEL_NAME = "gemini-3.6-flash"
-
-
 SOCRATIC_SYSTEM_PROMPT = """
 You are SocraticAI, an AI tutor designed for JEE and NEET
 students in India.
@@ -96,7 +93,7 @@ Analyze the student's question now.
 """
 
     response = client.models.generate_content(
-        model=MODEL_NAME,
+        model=settings.gemini_model,
         contents=prompt,
     )
 
