@@ -3,11 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Camera, Upload, X, CheckCircle2, FileJson, Sparkles, BookOpen, Layers, HelpCircle, Download, Lightbulb, ChevronRight, Target, Key, Award, Check, RotateCcw } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
 import { useExam } from '../context/ExamContext';
-import { analyzeQuestion } from '../services/api';
+import { analyzeQuestion, pingBackend } from '../services/api';
 import MathText from '../components/MathText';
 
 export default function DoubtPortalSection() {
   const { targetExam, setTargetExam } = useExam();
+
+  useEffect(() => {
+    pingBackend();
+  }, []);
 
   const [selectedSubject, setSelectedSubject] = useState('Physics');
   const [errorTag, setErrorTag] = useState('Conceptual Blindspot');
