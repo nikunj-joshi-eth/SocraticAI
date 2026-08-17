@@ -1,4 +1,6 @@
-const API_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const API_URL = import.meta.env.VITE_BACKEND_URL !== undefined 
+  ? import.meta.env.VITE_BACKEND_URL 
+  : (import.meta.env.DEV ? "http://127.0.0.1:8000" : "");
 
 export async function analyzeQuestion(data) {
   try {
@@ -8,7 +10,9 @@ export async function analyzeQuestion(data) {
       target_exam: data.exam || "JEE Main"
     };
 
-    const response = await fetch(`${API_URL}/questions/`, {
+    const endpoint = API_URL ? `${API_URL}/questions/` : "/questions/";
+
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

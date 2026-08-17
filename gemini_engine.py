@@ -58,7 +58,7 @@ def analyze_student_problem(
 
     if gcp_project:
         client = genai.Client(vertexai=True, project=gcp_project, location=location)
-    elif api_key:
+    elif api_key and api_key != "your_gemini_api_key_here" and api_key.startswith("AIzaSy"):
         client = genai.Client(api_key=api_key)
     else:
         # Fallback mode for development when GEMINI_API_KEY is not set
