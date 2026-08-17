@@ -66,7 +66,7 @@ def analyze_student_problem(
         
         p_lower = (text_prompt or "").lower()
         
-        if "7^" in p_lower or "induction" in p_lower or "divisible" in p_lower or "q1" in p_lower or "math" in p_lower or "mathematics" in p_lower or subject == "Mathematics":
+        if "7^" in p_lower or "induction" in p_lower or "divisible" in p_lower or "q1" in p_lower or "math" in p_lower or "mathematics" in p_lower:
             parsed_report = AnalysisReport(
                 subject="Mathematics",
                 chapter="Algebra — Mathematical Induction",
