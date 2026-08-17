@@ -63,15 +63,15 @@ export default function DoubtPortalSection() {
           subject: a.subject || selectedSubject,
           chapter: a.chapter || "Algebra — Mathematical Induction",
           subtopic: a.subtopic || "Divisibility Properties & Base Case Proofs",
-          detectedProblem: a.detected_problem_latex || r"If $n \in \mathbb{N}$, then $7^{2n} + 2^{3n-3} \cdot 3^{n-1} + n^2 - 3n + 2$ is always divisible by...",
+          detectedProblem: a.detected_problem_latex || "If n ∈ ℕ, then 7^(2n) + 2^(3n-3) · 3^(n-1) + n² - 3n + 2 is always divisible by...",
           errorTag: a.error_type || errorTag,
           errorAnalysis: a.error_analysis || "Attempted direct algebraic expansion without evaluating base case n = 1.",
           socraticHints: a.socratic_hints && a.socratic_hints.length > 0 
             ? a.socratic_hints.map(h => typeof h === 'string' ? h : h.hint)
             : [
-                "What is the simplest base value of $n$ in $\\mathbb{N}$ you can test first?",
-                "For $n = 1$, evaluate $7^2 + 2^0 \\cdot 3^0 + 1^2 - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50$. What numbers divide 50?",
-                "Now test $n = 2$ to see if 25 or another candidate factor remains a common divisor."
+                "What is the simplest base value of n in ℕ you can test first?",
+                "For n = 1, evaluate 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. What numbers divide 50?",
+                "Now test n = 2 to see if 25 or another candidate factor remains a common divisor."
               ],
           xpEarned: a.xp_earned || 145
         });
@@ -95,8 +95,8 @@ export default function DoubtPortalSection() {
         chapter: isInductionOrMath ? "Algebra — Mathematical Induction" : "Physics — Rotational Mechanics",
         subtopic: isInductionOrMath ? "Divisibility Properties & Base Cases" : "Torque & Angular Acceleration",
         detectedProblem: isInductionOrMath 
-          ? r"If $n \in \mathbb{N}$, then $7^{2n} + 2^{3n-3} \cdot 3^{n-1} + n^2 - 3n + 2$ is always divisible by..."
-          : r"Find the torque and linear acceleration of the rolling cylinder on rough incline $\theta$.",
+          ? "If n ∈ ℕ, then 7^(2n) + 2^(3n-3) · 3^(n-1) + n² - 3n + 2 is always divisible by..."
+          : "Find the torque and linear acceleration of the rolling cylinder on rough incline θ.",
         errorTag: errorTag,
         errorAnalysis: isInductionOrMath
           ? "Attempted direct algebraic expansion without evaluating the base case $n = 1$ to check candidate factors."
