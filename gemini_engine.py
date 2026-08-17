@@ -30,6 +30,7 @@ Perform the following steps carefully:
    - Hint 1 MUST validate their correct working steps and prompt the NEXT immediate step right where their handwritten work stopped or diverged.
    - Hint 2 guides them through combining the components or performing the key algebraic/vector calculation.
    - Hint 3 prompts dimensional or boundary checking without ever spoiling the final numeric/algebraic answer.
+   - IMPORTANT: Write all Socratic Hints in clean, human-readable text (e.g. use "80 km/h", "v_sg", "v_sb", "m/s" instead of raw LaTeX commands like "\\text{km/h}" or "v_{sg}").
 5. Provide 1-2 similar Previous Year Questions (PYQs) from JEE Main, JEE Advanced, or NEET for additional practice.
 
 Format your entire response strictly according to the provided JSON Schema.
