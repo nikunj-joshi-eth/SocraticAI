@@ -372,48 +372,24 @@ export default function DoubtPortalSection() {
                 )}
               </div>
 
-              {/* STEP 3: Question Text & Error Tag */}
+              {/* STEP 3: Question Text & Typed Query */}
               <div>
                 <div className="text-xs font-mono font-bold text-brand-cyan uppercase tracking-wider mb-4 flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan flex items-center justify-center text-[10px]">3</span>
-                  Doubt Statement & Suspected Error
+                  Doubt Statement & Query
                 </div>
 
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">
-                      Question Statement / Typed Query (e.g. "Help me with Q1" or "Help me with Q2 independent events")
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={questionText}
-                      onChange={(e) => setQuestionText(e.target.value)}
-                      placeholder="Type your question or query here (e.g. 'Help me solve question 1 on mathematical induction' or 'How to check if events A and B u C are independent?')"
-                      className="w-full bg-[#050508] border border-white/15 rounded-xl p-3 text-xs text-white font-mono placeholder:text-slate-600 focus:outline-none focus:border-brand-cyan"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1.5">
-                      Suspected Error Category
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {['Conceptual Blindspot', 'Calculation Slip', 'Formula Misapplication', 'Incomplete Step'].map(tag => (
-                        <button
-                          key={tag}
-                          type="button"
-                          onClick={() => setErrorTag(tag)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all ${
-                            errorTag === tag
-                              ? 'bg-brand-violet text-white border border-brand-cyan shadow-glow-violet'
-                              : 'bg-[#050508] border border-white/10 text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          {tag}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                <div>
+                  <label className="block text-xs font-mono text-slate-400 mb-1.5">
+                    Question Statement / Typed Query (Optional if photo attached)
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={questionText}
+                    onChange={(e) => setQuestionText(e.target.value)}
+                    placeholder="Type your question or query here (e.g. 'Help me solve question 1 on mathematical induction' or 'How to check if events A and B u C are independent?')"
+                    className="w-full bg-[#050508] border border-white/15 rounded-xl p-3 text-xs text-white font-mono placeholder:text-slate-600 focus:outline-none focus:border-brand-cyan"
+                  />
                 </div>
               </div>
 
