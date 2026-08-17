@@ -1,83 +1,100 @@
 from functools import lru_cache
-
-from supabase import Client, create_client
+import logging
+from typing import Optional
 
 from app.core.config import get_settings
 from app.models.ai import AnalysisReport
 
+logger = logging.getLogger("supabase_service")
 
 @lru_cache
-def get_supabase_client() -> Client:
+def get_supabase_client():
     settings = get_settings()
 
-    if not settings.supabase_url:
-        raise RuntimeError("SUPABASE_URL is not configured")
+    if not settings.supabase_url or not settings.supabase_key:
+        return None
 
-    if not settings.supabase_key:
-        raise RuntimeError("SUPABASE_KEY is not configured")
-
-    return create_client(
-        settings.supabase_url,
-        settings.supabase_key,
-    )
-
+    try:
+        from supabase import Client, create_client
+        return create_client(
+            settings.supabase_url,
+            settings.supabase_key,
+        )
+    except Exception as e:
+        logger.warning(f"Could not connect to Supabase: {e}")
+        return None
 
 def save_question(
     question: str,
     subject: str,
-    analysis: AnalysisReport,
+    analysis: dict,
 ):
     client = get_supabase_client()
+    if not client:
+        logger.info("Supabase credentials not set. Returning local save confirmation.")
+        return [{"id": "LOCAL_DB_RECORD"}]
 
-    data = {
-        "question_text": question,
-        "subject": subject,
-        "topic": analysis.chapter,
-        "difficulty_type": analysis.error_type,
-        "concept": analysis.subtopic,
-        "hint": (
-            analysis.socratic_hints[0].hint
-            if analysis.socratic_hints
-            else None
-        ),
-        "follow_up_question": None,
-        "ai_analysis": analysis.model_dump(),
-    }
+    try:
+        data = {
+            "question_text": question,
+            "subject": subject,
+            "topic": analysis.get("chapter", "General"),
+            "difficulty_type": analysis.get("error_type", "Conceptual"),
+            "concept": analysis.get("subtopic", "General Concept"),
+            "hint": (
+                analysis.get("socratic_hints", [""])[0]
+            ),
+            "ai_analysis": analysis,
+        }
 
-    response = (
-        client
-        .table("questions")
-        .insert(data)
-        .execute()
-    )
+        response = (
+            client
+            .table("questions")
+            .insert(data)
+            .execute()
+        )
 
-    return response.data
-
+        return response.data
+    except Exception as e:
+        logger.warning(f"Supabase write skipped: {e}")
+        return [{"id": "LOCAL_DB_RECORD"}]
 
 def get_question(question_id: str):
     client = get_supabase_client()
+    if not client:
+        return None
 
-    response = (
-        client
-        .table("questions")
-        .select("*")
-        .eq("id", question_id)
-        .single()
-        .execute()
-    )
+    try:
+        response = (
+            client
+            .table("questions")
+            .select("*")
+            .eq("id", question_id)
+            .single()
+            .execute()
+        )
 
-    return response.data
+        return response.data
+    except Exception as e:
+        logger.warning(f"Supabase read error: {e}")
+        return None
 
 def get_questions(limit: int = 20):
     client = get_supabase_client()
+    if not client:
+        return []
 
-    response = (
-        client
-        .table("questions")
-        .select("*")
-        .order("created_at", desc=True)
-        .limit(limit)
-        .execute()
-    )
+    try:
+        response = (
+            client
+            .table("questions")
+            .select("*")
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
 
-    return response.data
+        return response.data
+    except Exception as e:
+        logger.warning(f"Supabase query error: {e}")
+        return []
