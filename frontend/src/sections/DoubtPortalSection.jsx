@@ -547,13 +547,23 @@ export default function DoubtPortalSection() {
                   {/* Verified Solution & Final Answer Reveal Button */}
                   <div className="pt-2">
                     {!showFinalSolution ? (
-                      <button
-                        onClick={() => setShowFinalSolution(true)}
-                        className="w-full py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold transition-all flex items-center justify-center gap-2 shadow-glow-emerald"
-                      >
-                        <Key className="w-4 h-4 text-emerald-400" />
-                        <span>🔓 I've Attempted The Hints! Verify My Final Answer & Claim +{submittedResult.xpEarned} XP ➔</span>
-                      </button>
+                      activeHintStep >= 2 ? (
+                        <button
+                          onClick={() => setShowFinalSolution(true)}
+                          className="w-full py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold transition-all flex items-center justify-center gap-2 shadow-glow-emerald"
+                        >
+                          <Key className="w-4 h-4 text-emerald-400" />
+                          <span>🔓 Completed >50% Socratic Hints! Claim +{submittedResult.xpEarned} XP & Verify Solution ➔</span>
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setActiveHintStep(2)}
+                          className="w-full py-3 rounded-xl bg-brand-violet/20 border border-brand-violet/40 hover:bg-brand-violet/30 text-brand-cyan text-xs font-mono font-bold transition-all flex items-center justify-center gap-2"
+                        >
+                          <Lightbulb className="w-4 h-4 text-brand-cyan" />
+                          <span>💡 Complete >50% of Socratic Hints (Hint 2 & 3) to Unlock +{submittedResult.xpEarned} XP ➔</span>
+                        </button>
+                      )
                     ) : (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
