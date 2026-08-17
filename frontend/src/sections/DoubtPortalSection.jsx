@@ -157,17 +157,22 @@ export default function DoubtPortalSection() {
     }
 
     // Dynamic Socratic Analysis for Image & Query Uploads
-    const textSnippet = text ? text.trim() : (fileName || "Uploaded Notebook Image");
+    const trimmedText = text ? text.trim() : "";
+    const isGenericText = !trimmedText || trimmedText.toLowerCase().includes('what to do') || trimmedText.toLowerCase().includes('how to solve') || trimmedText.length < 5;
+    const textSnippet = isGenericText ? (fileName || "Handwritten Notebook Problem") : trimmedText;
+
     return {
       subject: subject || "Physics",
-      chapter: subject + " — Problem Analysis",
+      chapter: (subject || "Physics") + " — Problem Analysis",
       subtopic: "Socratic Vision Resolution",
       detectedProblem: textSnippet,
       errorAnalysis: "Analyzed uploaded question steps for conceptual accuracy and formula application.",
       socraticHints: [
-        `Hint 1: What core principle or equation connects the variables in "${textSnippet.slice(0, 35)}..."?`,
-        "Hint 2: Break the problem into two smaller steps. Isolate the target unknown variable.",
-        "Hint 3: Verify your intermediate expression by checking dimensional consistency."
+        isGenericText
+          ? "Hint 1: Examine the initial given quantities and equations transcribed from your notebook photo. What fundamental governing principle connects them?"
+          : `Hint 1: What core principle or equation connects the variables in "${textSnippet.slice(0, 35)}"?`,
+        "Hint 2: Identify where your handwritten working steps stopped. Isolate the target unknown variable in your equation.",
+        "Hint 3: Verify your intermediate expression by checking dimensional consistency and unit conversions."
       ],
       finalAnswer: "Verified Answer: Step-by-Step Self-Correction Confirmed",
       verifiedSolution: "Following Hints 1-3 isolates the target variable cleanly."
