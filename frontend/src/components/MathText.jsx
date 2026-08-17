@@ -1,36 +1,22 @@
 import React from 'react';
-import { InlineMath, BlockMath } from 'react-katex';
 
 export default function MathText({ text = '' }) {
-  const parts = text.split(/(\$\$[\s\S]*?\$\$|\$[^$]+\$)/g);
+  if (!text) return null;
 
-  return (
-    <>
-      {parts.map((part, index) => {
-        if (part.startsWith('$$') && part.endsWith('$$')) {
-          return (
-            <BlockMath
-              key={index}
-              math={part.slice(2, -2)}
-            />
-          );
-        }
+  // Clean format math symbols for clear human readability
+  const cleanedText = text
+    .replace(/\\in/g, '∈')
+    .replace(/\\mathbb\{N\}/g, 'ℕ')
+    .replace(/\\mathbb\{R\}/g, 'ℝ')
+    .replace(/\\mathbb\{Z\}/g, 'ℤ')
+    .replace(/\\theta/g, 'θ')
+    .replace(/\\alpha/g, 'α')
+    .replace(/\\beta/g, 'β')
+    .replace(/\\pi/g, 'π')
+    .replace(/\\cup/g, '∪')
+    .replace(/\\cap/g, '∩')
+    .replace(/\\cdot/g, '·')
+    .replace(/\$/g, '');
 
-        if (part.startsWith('$') && part.endsWith('$')) {
-          return (
-            <InlineMath
-              key={index}
-              math={part.slice(1, -1)}
-            />
-          );
-        }
-
-        return (
-          <React.Fragment key={index}>
-            {part}
-          </React.Fragment>
-        );
-      })}
-    </>
-  );
+  return <span>{cleanedText}</span>;
 }
