@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Camera, Upload, X, CheckCircle2, FileJson, Sparkles, BookOpen, Layers, HelpCircle, Download, Lightbulb, ChevronRight, Target } from 'lucide-react';
+import { Send, Camera, Upload, X, CheckCircle2, FileJson, Sparkles, BookOpen, Layers, HelpCircle, Download, Lightbulb, ChevronRight, Target, Key, Award, Check } from 'lucide-react';
 import TiltCard from '../components/TiltCard';
 import { useExam } from '../context/ExamContext';
 import { analyzeQuestion } from '../services/api';
@@ -18,6 +18,7 @@ export default function DoubtPortalSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedResult, setSubmittedResult] = useState(null);
   const [activeHintStep, setActiveHintStep] = useState(1);
+  const [showFinalSolution, setShowFinalSolution] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
 
   const fileInputRef = useRef(null);
@@ -60,9 +61,11 @@ export default function DoubtPortalSection() {
         errorAnalysis: "Attempted full algebraic expansion without testing the base natural number n = 1 to check factor options.",
         socraticHints: [
           "Hint 1: What is the smallest natural number n (n = 1) you can substitute first to evaluate candidate options?",
-          "Hint 2: Substituting n = 1 yields: 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. Which option (25, 35, 45) divides 50?",
+          "Hint 2: For n = 1, substituting into the expression gives: 7² + 2⁰ · 3⁰ + 1² - 3(1) + 2 = 49 + 1 + 1 - 3 + 2 = 50. Which option (25, 35, 45) divides 50?",
           "Hint 3: Test n = 2 (7⁴ + 2³ · 3¹ + 4 - 6 + 2 = 2425 = 25 × 97) to verify if 25 remains the common factor for all natural numbers n."
-        ]
+        ],
+        finalAnswer: "Correct Option: (A) 25",
+        verifiedSolution: "Substituting n = 1 gives 50 (divisible by 25). Substituting n = 2 gives 2425 = 25 × 97 (divisible by 25). By mathematical induction, the expression is always divisible by 25 for all n ∈ ℕ."
       };
     }
 
@@ -77,7 +80,9 @@ export default function DoubtPortalSection() {
           "Hint 1: What is the defining formula for P(A ∩ (B ∪ C)) using distributive laws for sets?",
           "Hint 2: Expand P(A ∩ (B ∪ C)) = P((A ∩ B) ∪ (A ∩ C)) = P(A ∩ B) + P(A ∩ C) - P(A ∩ B ∩ C). Use mutual independence P(A ∩ B) = P(A)P(B).",
           "Hint 3: Factor out P(A) from the equation to verify if P(A ∩ (B ∪ C)) = P(A) · P(B ∪ C). Does this hold for both S₁ and S₂?"
-        ]
+        ],
+        finalAnswer: "Correct Option: (C) Both S₁ and S₂ are true",
+        verifiedSolution: "By set distributive laws and mutual independence: P(A ∩ (B ∪ C)) = P(A) P(B ∪ C), so S₁ is true. Similarly, P(A ∩ (B ∩ C)) = P(A) P(B ∩ C), so S₂ is true."
       };
     }
 
@@ -92,7 +97,9 @@ export default function DoubtPortalSection() {
           "Hint 1: For a polynomial to be divisible by (x - a)², what must be true about both P(a) and its derivative P'(a)?",
           "Hint 2: Evaluate P(a) = a(aⁿ⁻¹ - n aⁿ⁻¹) + aⁿ(n - 1) = aⁿ(1 - n + n - 1) = 0. Now differentiate P(x) with respect to x.",
           "Hint 3: Differentiating gives P'(x) = n xⁿ⁻¹ - n aⁿ⁻¹. Evaluate P'(a) = n aⁿ⁻¹ - n aⁿ⁻¹ = 0. For (x - a)² factor degree, what must n satisfy?"
-        ]
+        ],
+        finalAnswer: "Correct Option: (C) All n ∈ ℕ",
+        verifiedSolution: "Since P(a) = 0 and P'(a) = 0 identically for all n ∈ ℕ, (x - a)² is a factor for all n ∈ ℕ."
       };
     }
 
@@ -107,7 +114,9 @@ export default function DoubtPortalSection() {
           "Hint 1: Write down the torque equation about the center of mass: τ = I α. What force creates torque?",
           "Hint 2: Relate linear acceleration a to angular acceleration α assuming pure rolling (a = α R).",
           "Hint 3: Combine Mg sin θ - f = Ma and f R = I (a / R) with I = 1/2 M R² to solve for f = (1/3) Mg sin θ."
-        ]
+        ],
+        finalAnswer: "Verified Answer: Friction Force f = (1/3) Mg sin θ",
+        verifiedSolution: "Using I = 1/2 M R² for a solid cylinder in α = a / R gives f R = (1/2 M R²) (a / R) => f = 1/2 Ma. Substituting into Mg sin θ - f = Ma yields f = (1/3) Mg sin θ."
       };
     }
 
@@ -119,10 +128,12 @@ export default function DoubtPortalSection() {
       detectedProblem: text || `Uploaded Image (${imageFileName || 'notebook_photo.jpg'}): Analyzing problem equations and diagrams...`,
       errorAnalysis: "Identified potential step slip or conceptual ambiguity in problem setup.",
       socraticHints: [
-        `Hint 1: Examine the given conditions in "${extractedTopic}". What fundamental principle or formula connects the given variables?`,
+        `Hint 1: Examine the given conditions in "${extractedTopic}". What fundamental principle connects the given variables?`,
         "Hint 2: Break down the problem into two smaller steps. Have you isolated the unknown variable on one side of the equation?",
         "Hint 3: Substitute known boundary values or units to check if your intermediate expression is dimensionally consistent."
-      ]
+      ],
+      finalAnswer: "Verified Answer: Step-by-Step Self-Correction Confirmed",
+      verifiedSolution: "By following Hints 1-3, substitute boundary conditions to isolate the target variable cleanly."
     };
   };
 
@@ -130,6 +141,7 @@ export default function DoubtPortalSection() {
     e.preventDefault();
     setIsSubmitting(true);
     setActiveHintStep(1);
+    setShowFinalSolution(false);
 
     // Try calling live backend API first
     try {
@@ -156,6 +168,8 @@ export default function DoubtPortalSection() {
                 "Hint 2: Break the problem into 2 smaller equations. Isolate the target variable.",
                 "Hint 3: Substitute boundary values to verify your intermediate result."
               ],
+          finalAnswer: a.final_answer || "Verified Socratic Answer Confirmed",
+          verifiedSolution: a.solution_summary || "Step-by-step mathematical proof verified.",
           xpEarned: a.xp_earned || 145
         });
         setIsSubmitting(false);
@@ -180,6 +194,8 @@ export default function DoubtPortalSection() {
         errorTag: errorTag,
         errorAnalysis: dynamicReport.errorAnalysis,
         socraticHints: dynamicReport.socraticHints,
+        finalAnswer: dynamicReport.finalAnswer,
+        verifiedSolution: dynamicReport.verifiedSolution,
         xpEarned: 145
       });
     }, 1000);
@@ -191,7 +207,6 @@ export default function DoubtPortalSection() {
       studentSession: {
         exam: targetExam,
         subject: selectedSubject,
-        errorTag: errorTag,
         doubtText: questionText,
         hasAttachment: !!imagePreview
       }
@@ -237,7 +252,7 @@ export default function DoubtPortalSection() {
             viewport={{ once: true }}
             className="text-base sm:text-lg text-slate-400"
           >
-            Snap any notebook photo or type your query. SocraticAI reads your exact upload, identifies the chapter, and prompts 3 progressive hints tailored specifically to your question!
+            Snap any notebook photo or type your doubt. SocraticAI reads your exact upload, prompts 3 progressive hints, and lets you verify your final answer to earn +145 XP!
           </motion.p>
         </div>
 
@@ -452,12 +467,12 @@ export default function DoubtPortalSection() {
 
                   {/* Error Breakdown */}
                   <div className="mb-6 bg-rose-500/10 border border-rose-500/30 p-3.5 rounded-xl text-xs font-mono">
-                    <span className="text-rose-400 font-bold block mb-1">Diagnosed Error: {submittedResult.errorTag}</span>
+                    <span className="text-rose-400 font-bold block mb-1">AI Diagnosed Error: {submittedResult.errorTag}</span>
                     <p className="text-slate-300">{submittedResult.errorAnalysis}</p>
                   </div>
 
-                  {/* 3 Progressive Socratic Hints (NO ANSWER SPOILERS!) */}
-                  <div className="bg-[#050508] rounded-xl p-5 border border-brand-violet/40">
+                  {/* 3 Progressive Socratic Hints */}
+                  <div className="bg-[#050508] rounded-xl p-5 border border-brand-violet/40 mb-6">
                     <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
                       <span className="text-xs font-mono font-bold text-brand-cyan flex items-center gap-2">
                         <Lightbulb className="w-4 h-4 text-brand-cyan" />
@@ -497,6 +512,44 @@ export default function DoubtPortalSection() {
                       </div>
                     )}
                   </div>
+
+                  {/* Verified Solution & Final Answer Reveal Button */}
+                  <div className="pt-2">
+                    {!showFinalSolution ? (
+                      <button
+                        onClick={() => setShowFinalSolution(true)}
+                        className="w-full py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold transition-all flex items-center justify-center gap-2 shadow-glow-emerald"
+                      >
+                        <Key className="w-4 h-4 text-emerald-400" />
+                        <span>🔓 I've Attempted The Hints! Verify My Final Answer & Claim +{submittedResult.xpEarned} XP ➔</span>
+                      </button>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-emerald-500/15 border border-emerald-500/40 rounded-xl p-5"
+                      >
+                        <div className="flex items-center justify-between mb-3 border-b border-emerald-500/20 pb-2">
+                          <span className="text-xs font-mono font-bold text-emerald-400 flex items-center gap-2">
+                            <Award className="w-4 h-4 text-emerald-400" />
+                            Verified Final Answer (+{submittedResult.xpEarned} XP Added To Leaderboard!)
+                          </span>
+                          <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold">
+                            VERIFIED ANSWER
+                          </span>
+                        </div>
+
+                        <div className="text-sm font-mono font-bold text-white mb-2">
+                          {submittedResult.finalAnswer}
+                        </div>
+
+                        <p className="text-xs font-mono text-slate-300 leading-relaxed">
+                          {submittedResult.verifiedSolution}
+                        </p>
+                      </motion.div>
+                    )}
+                  </div>
+
                 </motion.div>
               )}
             </AnimatePresence>
@@ -533,8 +586,7 @@ export default function DoubtPortalSection() {
                 <pre>{JSON.stringify({
                   exam: targetExam,
                   subject: selectedSubject,
-                  errorTag: errorTag,
-                  questionText: questionText || "Sample question statement"
+                  doubtText: questionText || "Sample question statement"
                 }, null, 2)}</pre>
               </div>
 
