@@ -61,10 +61,10 @@ def analyze_student_problem(
     api_key = os.getenv("GEMINI_API_KEY")
     gcp_project = project_id or os.getenv("GCP_PROJECT_ID")
 
-    if gcp_project:
-        client = genai.Client(vertexai=True, project=gcp_project, location=location)
-    elif api_key:
+    if api_key and len(api_key) > 5:
         client = genai.Client(api_key=api_key)
+    elif gcp_project:
+        client = genai.Client(vertexai=True, project=gcp_project, location=location)
     else:
         # Fallback mode for development when GEMINI_API_KEY is not set
         logger.warning("No Gemini API key found in env. Returning dynamic local report based on prompt.")
@@ -157,16 +157,31 @@ def analyze_student_problem(
     prompt_text = text_prompt or "Analyze this JEE/NEET problem and evaluate the student's solution."
     contents.append(prompt_text)
 
-    response = client.models.generate_content(
-        model="gemini-1.5-pro",
-        contents=contents,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            response_mime_type="application/json",
-            response_schema=AnalysisReport,
-            temperature=0.2,
-        ),
-    )
+    target_model = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+    response = None
+    last_err = None
+    models_to_try = [target_model, "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.6-flash"]
+
+    for model_name in models_to_try:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=contents,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    response_mime_type="application/json",
+                    response_schema=AnalysisReport,
+                    temperature=0.2,
+                ),
+            )
+            if response:
+                break
+        except Exception as e:
+            last_err = e
+            logger.warning(f"Model {model_name} failed: {e}. Trying fallback model...")
+
+    if not response:
+        raise last_err or RuntimeError("Failed to generate content from Gemini API")
 
     latency_ms = (time.time() - start_time) * 1000
 
