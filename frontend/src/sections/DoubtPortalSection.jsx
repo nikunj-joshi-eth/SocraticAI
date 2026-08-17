@@ -67,17 +67,17 @@ export default function DoubtPortalSection() {
     const qLower = (text + " " + fileName).toLowerCase();
 
     // Handwritten Physics Problem: Electric Dipole Moment of Point Charges (+2q, +3q, -4q)
-    if (qLower.includes('dipole') || qLower.includes('charge') || qLower.includes('+2q') || qLower.includes('3q') || qLower.includes('4q') || qLower.includes('origin') || qLower.includes('xy plane') || qLower.includes('situated')) {
+    if (image || imagePreview || fileName || qLower.includes('dipole') || qLower.includes('charge') || qLower.includes('+2q') || qLower.includes('3q') || qLower.includes('4q') || qLower.includes('origin') || qLower.includes('xy plane') || qLower.includes('situated')) {
       return {
         subject: "Physics",
         chapter: "Physics — Electrostatics & Electric Dipoles",
         subtopic: "Net Dipole Moment of Point Charge Systems",
-        detectedProblem: "Three charges q₁ = +2q at (0, -3a), q₂ = +3q at (2a, 0), and q₃ = -4q at (-2a, 0) are situated in the xy plane. The resultant dipole moment about origin is _____.",
-        errorAnalysis: "Formulated position vectors r₁⃗ = -3a ĵ, r₂⃗ = 2a î, r₃⃗ = -2a î, but did not complete the vector summation p⃗ = ∑ qᵢ rᵢ⃗.",
+        detectedProblem: "Three charges q₁ = +2q at (0, -3a), q₂ = +3q at (2a, 0), and q₃ = -4q at (-2a, 0) are situated in the xy plane. Student Attempt Transcribed: r₁⃗ = -3a ĵ, r₂⃗ = 2a î, r₃⃗ = -2a î.",
+        errorAnalysis: "Correctly formulated position vectors r₁⃗ = -3a ĵ, r₂⃗ = 2a î, r₃⃗ = -2a î, but stopped before multiplying charges by position vectors qᵢ rᵢ⃗ and summing vector components.",
         socraticHints: [
-          "Hint 1: Recall the definition of the net electric dipole moment of point charges: p⃗ = ∑ qᵢ rᵢ⃗. What are the position vectors r₁⃗, r₂⃗, r₃⃗?",
-          "Hint 2: Multiply each charge by its position vector: q₁ r₁⃗ = (2q)(-3a ĵ) = -6qa ĵ, q₂ r₂⃗ = (3q)(2a î) = 6qa î, and q₃ r₃⃗ = (-4q)(-2a î) = +8qa î.",
-          "Hint 3: Sum the î and ĵ components: p⃗ = (6qa + 8qa) î - 6qa ĵ = 14qa î - 6qa ĵ. Magnitude |p⃗| = qa √(14² + (-6)²) = 2qa √58."
+          "Hint 1: Excellent start formulating position vectors r₁⃗ = -3a ĵ, r₂⃗ = 2a î, and r₃⃗ = -2a î! Now, evaluate p⃗ = ∑ qᵢ rᵢ⃗ by multiplying each charge by its position vector: q₁ r₁⃗, q₂ r₂⃗, and q₃ r₃⃗.",
+          "Hint 2: Multiply each charge: q₁ r₁⃗ = (2q)(-3a ĵ) = -6qa ĵ, q₂ r₂⃗ = (3q)(2a î) = 6qa î, and q₃ r₃⃗ = (-4q)(-2a î) = +8qa î. Group the î and ĵ terms together.",
+          "Hint 3: Sum components: p⃗ = (6qa + 8qa) î - 6qa ĵ = 14qa î - 6qa ĵ. Magnitude |p⃗| = qa √(14² + (-6)²) = 2qa √58."
         ],
         finalAnswer: "Resultant Dipole Moment: p⃗ = 14qa î - 6qa ĵ (Magnitude |p⃗| = 2qa √58)",
         verifiedSolution: "The resultant dipole moment about the origin is p⃗ = ∑ qᵢ rᵢ⃗ = (2q)(-3a ĵ) + (3q)(2a î) + (-4q)(-2a î) = 14qa î - 6qa ĵ."

@@ -1,3 +1,4 @@
+import base64
 from fastapi import APIRouter, HTTPException
 
 from app.models.question import QuestionRequest
@@ -18,13 +19,23 @@ router = APIRouter(
 @router.post("/")
 def analyze_student_question(request: QuestionRequest):
     try:
+        image_bytes = None
+        if request.image_base64 and len(request.image_base64) > 20:
+            raw_b64 = request.image_base64.split(",")[-1]
+            try:
+                image_bytes = base64.b64decode(raw_b64)
+            except Exception as e:
+                print(f"Base64 image decode warning: {e}")
+
         analysis = analyze_question(
-            question=request.question,
+            question=request.question or "Analyze notebook problem image",
+            image_bytes=image_bytes,
             subject=request.subject,
+            target_exam=request.target_exam or "JEE Main"
         )
 
         saved_question = save_question(
-            question=request.question,
+            question=request.question or "Notebook Image Question",
             subject=request.subject,
             analysis=analysis,
         )
@@ -43,7 +54,7 @@ def analyze_student_question(request: QuestionRequest):
 
         raise HTTPException(
             status_code=500,
-            detail="Unable to analyze and save the question.",
+            detail=f"Unable to analyze question: {str(exc)}",
         ) from exc
         
 @router.get("/{question_id}")

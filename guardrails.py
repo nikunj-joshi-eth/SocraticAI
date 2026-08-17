@@ -31,7 +31,10 @@ def validate_input_image(
     3. Minimum dimension bounds
     """
     try:
-        if isinstance(image_input, str):
+        import io
+        if isinstance(image_input, bytes):
+            pil_img = Image.open(io.BytesIO(image_input))
+        elif isinstance(image_input, str):
             pil_img = Image.open(image_input)
         else:
             pil_img = image_input

@@ -117,8 +117,11 @@ def preprocess_problem_image(
     5. Resolution optimization for Gemini API
     """
     try:
+        import io
         # Load image
-        if isinstance(image_input, str):
+        if isinstance(image_input, bytes):
+            pil_img = Image.open(io.BytesIO(image_input))
+        elif isinstance(image_input, str):
             pil_img = Image.open(image_input)
         else:
             pil_img = image_input
@@ -152,7 +155,10 @@ def preprocess_problem_image(
 
     except Exception as e:
         print(f"⚠️ Preprocessing warning: {e}. Falling back to original image.")
-        if isinstance(image_input, str):
+        import io
+        if isinstance(image_input, bytes):
+            return Image.open(io.BytesIO(image_input)).convert("RGB")
+        elif isinstance(image_input, str):
             return Image.open(image_input).convert("RGB")
         return image_input
 
