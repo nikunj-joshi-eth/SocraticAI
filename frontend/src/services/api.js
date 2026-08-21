@@ -47,7 +47,28 @@ export async function analyzeQuestion(data) {
     return await response.json();
   } catch (error) {
     console.error("API Fetch Error:", error);
-    throw error;
+
+    // Preserve the existing result-card UI, but make backend failure explicit.
+    // This is an error payload, not a fabricated AI diagnosis or answer.
+    return {
+      analysis: {
+        subject: data.subject || "Physics",
+        chapter: "Backend unavailable",
+        subtopic: "No AI diagnosis generated",
+        detected_problem_latex: data.question || "The submitted doubt could not be analyzed.",
+        error_type: "AI Service Unavailable",
+        error_analysis: error?.message || "The SocraticAI backend could not process this request.",
+        socratic_hints: [
+          "The AI backend did not return a diagnosis. Please retry the request.",
+          "If the problem persists, check the backend health and deployment logs.",
+          "No final answer was generated or verified for this request."
+        ],
+        final_answer: "No verified answer generated",
+        solution_summary: "No XP awarded. A real Gemini-backed analysis is required before an answer can be verified.",
+        xp_earned: 0,
+      },
+      backend_error: true,
+    };
   } finally {
     clearTimeout(timeoutId);
   }
