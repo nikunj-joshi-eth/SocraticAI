@@ -44,7 +44,16 @@ export async function analyzeQuestion(data) {
       throw new Error(detail);
     }
 
-    return await response.json();
+    const result = await response.json();
+
+    // XP must not be awarded merely because Gemini generated a report.
+    // The dedicated verification flow should award XP after the student
+    // completes the Socratic steps and the answer is actually verified.
+    if (result?.analysis) {
+      result.analysis.xp_earned = 0;
+    }
+
+    return result;
   } catch (error) {
     console.error("API Fetch Error:", error);
 
