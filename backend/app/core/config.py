@@ -9,8 +9,13 @@ class Settings(BaseSettings):
     app_env: str = "development"
 
     gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.6-flash"
     supabase_url: str = ""
     supabase_key: str = ""
+    allowed_origins: str = (
+        "http://localhost:3000,http://127.0.0.1:3000,"
+        "https://socratic-ai-two.vercel.app"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -18,6 +23,14 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [
+            origin.strip()
+            for origin in self.allowed_origins.split(",")
+            if origin.strip()
+        ]
 
 
 @lru_cache
