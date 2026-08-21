@@ -18,7 +18,7 @@ def analyze_question(
     question: str = "",
     image_bytes: Optional[bytes] = None,
     subject: Optional[str] = None,
-    target_exam: str = "JEE Advanced",
+    target_exam: str = "JEE Main",
     student_name: str = "Aspirant",
     dream_college: str = "IIT Bombay",
 ) -> Dict[str, Any]:
@@ -36,10 +36,19 @@ def analyze_question(
     os.environ["GEMINI_API_KEY"] = settings.gemini_api_key
     os.environ["GEMINI_MODEL"] = settings.gemini_model
 
+    # Preserve the student's selected subject and exam as explicit context.
+    # The model may still auto-detect the subject from the actual problem,
+    # but it now has the UI selection available as a strong prior.
+    contextual_question = (
+        f"Selected subject: {subject or 'Not specified'}\n"
+        f"Target exam: {target_exam or 'JEE Main'}\n\n"
+        f"Student doubt:\n{question or 'Analyze the uploaded notebook problem image.'}"
+    )
+
     report = analyze_student_problem(
         image_input=image_bytes,
-        text_prompt=question if question else None,
-        target_exam=target_exam,
+        text_prompt=contextual_question,
+        target_exam=target_exam or "JEE Main",
         student_name=student_name,
         dream_college=dream_college,
     )
